@@ -14,6 +14,7 @@
       };
     };
   };
+  virtualisation.diskSize = 32 * 1024; # 32 GB
   # optional, but ensures rpc-statsd is running for on demand mounting
   boot.supportedFilesystems = [ "nfs" ];
   services.github-runners = {
