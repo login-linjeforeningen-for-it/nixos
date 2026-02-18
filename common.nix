@@ -1,4 +1,4 @@
-{host, ...}:
+{host, lib, ...}:
 {
   networking.hostName = host;
   services.openssh.enable = true;
@@ -37,7 +37,7 @@
     isNormalUser = true;
     extraGroups = ["wheel"];
     openssh.authorizedKeys.keys = [
-      builtins.readFile ./id_ed25519.pub
+      (lib.strings.removeSuffix "\n" (builtins.readFile ./id_ed25519.pub))
     ];
   };
   system.stateVersion = "25.11";
