@@ -79,7 +79,7 @@
           loadBalancer = {
             serversTransport = "insecureTransport";
             servers = [
-            { url = "https://192.168.1.105"; }
+            { url = "https://10.10.0.17"; }
           ];
           };
         };
@@ -87,7 +87,7 @@
           loadBalancer = {
             serversTransport = "insecureTransport";
             servers = [
-              { url = "https://192.168.1.141"; }
+              { url = "https://10.10.0.18"; }
             ];
           };
         };
@@ -95,7 +95,7 @@
           loadBalancer = {
             serversTransport = "insecureTransport";
             servers = [
-              { url = "https://192.168.1.54"; }
+              { url = "https://10.10.0.19"; }
             ];
           };
         };
@@ -103,8 +103,8 @@
           loadBalancer = {
             serversTransport = "insecureTransport";
             servers = [
-              { url = "https://192.168.1.180:8006"; }
-              { url = "https://192.168.1.134:8006"; }
+              { url = "https://10.10.0.11:8006"; }
+              { url = "https://10.10.0.12:8006"; }
             ];
             healthCheck = {
               path = "/";
