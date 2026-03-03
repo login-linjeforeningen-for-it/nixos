@@ -25,6 +25,7 @@
           address = ":443";
           asDefault = true;
           http.tls.certResolver = "letsencrypt";
+          transport.respondingTimeouts.idleTimeout = "10m";
         };
       };
 
@@ -117,7 +118,7 @@
           loadBalancer = {
             serversTransport = "insecureTransport";
             servers = [
-              { url = "https://192.168.1.107"; }
+              { url = "https://10.10.0.30"; }
             ];
           };
         };
