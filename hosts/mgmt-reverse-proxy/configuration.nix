@@ -1,10 +1,14 @@
-{config, pkgs, ...}:{
+{
+  config,
+  pkgs,
+  ...
+}: {
   networking.firewall = {
     enable = true;
-    allowedTCPPorts = [ 80 443 ];
+    allowedTCPPorts = [80 443];
   };
   services.traefik = let
-    domain = "login.no"; 
+    domain = "login.no";
   in {
     enable = true;
     environmentFiles = [
@@ -40,8 +44,6 @@
         storage = "${config.services.traefik.dataDir}/acme.json";
         dnsChallenge.provider = "digitalocean";
       };
-
-      api.dashboard = true;
     };
 
     dynamicConfigOptions = {
@@ -51,28 +53,40 @@
       http.routers = {
         "idrac1" = {
           service = "idrac1";
-          entryPoints = [ "https" ];
+          entryPoints = ["https"];
           rule = "Host(`idrac1.${domain}`)";
         };
         "idrac2" = {
           service = "idrac2";
-          entryPoints = [ "https" ];
+          entryPoints = ["https"];
           rule = "Host(`idrac2.${domain}`)";
         };
         "idrac3" = {
           service = "idrac3";
-          entryPoints = [ "https" ];
+          entryPoints = ["https"];
           rule = "Host(`idrac3.${domain}`)";
         };
         "pve" = {
           service = "pve";
-          entryPoints = [ "https" ];
+          entryPoints = ["https"];
           rule = "Host(`pve.${domain}`)";
         };
         "truenas" = {
           service = "truenas";
-          entryPoints = [ "https" ];
+          entryPoints = ["https"];
           rule = "Host(`truenas.${domain}`)";
+        };
+      };
+      http.middlewares = {
+        websocket-headers = {
+          headers = {
+            customRequestHeaders = {
+              Connection = "Upgrade";
+            };
+            customResponseHeaders = {
+              Connection = "Upgrade";
+            };
+          };
         };
       };
       http.services = {
@@ -80,15 +94,15 @@
           loadBalancer = {
             serversTransport = "insecureTransport";
             servers = [
-            { url = "https://10.10.0.17"; }
-          ];
+              {url = "https://10.10.0.17";}
+            ];
           };
         };
         "idrac2" = {
           loadBalancer = {
             serversTransport = "insecureTransport";
             servers = [
-              { url = "https://10.10.0.18"; }
+              {url = "https://10.10.0.18";}
             ];
           };
         };
@@ -96,7 +110,7 @@
           loadBalancer = {
             serversTransport = "insecureTransport";
             servers = [
-              { url = "https://10.10.0.19"; }
+              {url = "https://10.10.0.19";}
             ];
           };
         };
@@ -104,8 +118,8 @@
           loadBalancer = {
             serversTransport = "insecureTransport";
             servers = [
-              { url = "https://10.10.0.11:8006"; }
-              { url = "https://10.10.0.12:8006"; }
+              {url = "https://10.10.0.11:8006";}
+              {url = "https://10.10.0.12:8006";}
             ];
             healthCheck = {
               path = "/";
@@ -114,11 +128,17 @@
             };
           };
         };
+        sticky = {
+          cookie = {
+            name = "pve_sticky_session";
+            httpOnly = true;
+          };
+        };
         "truenas" = {
           loadBalancer = {
             serversTransport = "insecureTransport";
             servers = [
-              { url = "https://10.10.0.30"; }
+              {url = "https://10.10.0.30";}
             ];
           };
         };
