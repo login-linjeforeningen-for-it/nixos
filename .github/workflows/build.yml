@@ -2,19 +2,16 @@ on:
   workflow_dispatch:
     inputs:
       host:
-        description: 'Hostname of the target machine'
+        description: 'IP of the target machine'
         required: true
-      version:
-        description: 'Semver version to build'
+      configuration:
+        description: 'NixOS configuration to deploy'
         required: true
 
 jobs:
   build:
     runs-on: "Proxmox 1"
     steps:
-      - name: Build NixOS image
+      - name: Rebuild vm
         run: |
-          nix build .#${{ github.event.inputs.host }}
-      - name: Copy image to target
-        run: |
-          cp ./result/nixos.qcow2 /mnt/truenas/imports/nixos-${{ github.event.inputs.host }}-${{ github.event.inputs.version }}.qcow2
+          sudo nix run github:nix-community/nixos-anywhere -- --flake .#{{ github.event.inputs.configuration }} -i id_ed25519 --target-host builder@{{ github.event.inputs.host }} --generate-hardware-config nixos-generate-config ./hardware-configuration.nix
