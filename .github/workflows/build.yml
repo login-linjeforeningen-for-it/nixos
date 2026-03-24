@@ -10,7 +10,7 @@ on:
 
 jobs:
   build:
-    runs-on: "Proxmox 1"
+    runs-on: "nixos"
     steps:
       - name: Rebuild vm
         run: |
