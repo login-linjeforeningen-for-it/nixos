@@ -1,5 +1,5 @@
 {...}:{
-  # optional, but ensures rpc-statsd is running for on demand mounting
+  # GitHub runner configuration for this host
   services.github-runners = {
     proxmox1 = {
       url = "https://github.com/login-linjeforeningen-for-it";
