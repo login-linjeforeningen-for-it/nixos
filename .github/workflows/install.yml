@@ -1,3 +1,5 @@
+name: Install NixOS configuration
+
 on:
   workflow_dispatch:
     inputs:
@@ -12,6 +14,6 @@ jobs:
   build:
     runs-on: "nixos"
     steps:
-      - name: Rebuild vm
+      - name: Install to VM
         run: |
           sudo nix run github:nix-community/nixos-anywhere -- --flake .#{{ github.event.inputs.configuration }} -i id_ed25519 --target-host builder@{{ github.event.inputs.host }} --generate-hardware-config nixos-generate-config ./hardware-configuration.nix

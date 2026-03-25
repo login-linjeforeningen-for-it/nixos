@@ -1,0 +1,19 @@
+name: Install NixOS configuration
+
+on:
+  workflow_dispatch:
+    inputs:
+      host:
+        description: 'IP of the target machine'
+        required: true
+      configuration:
+        description: 'NixOS configuration to deploy'
+        required: true
+
+jobs:
+  build:
+    runs-on: "nixos"
+    steps:
+      - name: Install to VM
+        run: |
+          NIX_SSHOPTS="-i id_ed25519" nixos-rebuild switch --sudo --target-host builder@{{ github.event.inputs.host }} --flake .#{{ github.event.inputs.configuration }}
