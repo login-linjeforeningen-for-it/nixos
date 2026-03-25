@@ -133,12 +133,12 @@
               interval = "10s";
               timeout = "3s";
             };
-          };
-        };
-        sticky = {
-          cookie = {
-            name = "pve_sticky_session";
-            httpOnly = true;
+            sticky = {
+              cookie = {
+                name = "pve_sticky_session";
+                httpOnly = true;
+              };
+            };
           };
         };
         "truenas" = {
