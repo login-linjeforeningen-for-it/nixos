@@ -17,12 +17,11 @@ jobs:
       - uses: actions/checkout@v6
       - name: Add agamemnon to known hosts
         run: |
-          mkdir -p ~/.ssh
-          ssh-keyscan ${{ github.event.inputs.host }} >> ~/.ssh/known_hosts
+          ssh-keyscan ${{ github.event.inputs.host }} >> known_hosts
       - name: Set up SSH key
         run: |
           echo "${{ secrets.DEPLOY_SSH_KEY }}" > id_ed25519
           chmod 600 id_ed25519
       - name: Install to VM
         run: |
-          sudo nix run github:nix-community/nixos-anywhere -- --flake .#${{ github.event.inputs.configuration }} -i id_ed25519 --target-host builder@${{ github.event.inputs.host }}
+          sudo nix run github:nix-community/nixos-anywhere -- --flake .#${{ github.event.inputs.configuration }} -o UserKnownHostsFile=known_hosts -i id_ed25519 --target-host builder@${{ github.event.inputs.host }}
