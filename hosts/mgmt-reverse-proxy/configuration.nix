@@ -151,7 +151,7 @@
         };
                 "pelican" = {
           loadBalancer = {
-            serversTransport = "pelican";
+            serversTransport = "insecureTransport";
             servers = [
               { url = "https://10.20.0.20"; }
             ];
