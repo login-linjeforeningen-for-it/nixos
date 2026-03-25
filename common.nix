@@ -1,5 +1,8 @@
-{host, ...}:
-{
+{host, ...}: {
+  imports = [
+    ./disk-config.nix
+    ./hardware-configuration.nix
+  ];
   networking.hostName = host;
   services.openssh.enable = true;
   services.qemuGuest.enable = true;
@@ -20,9 +23,22 @@
     ];
   };
   security.sudo.wheelNeedsPassword = false;
-  users.users.tekkom = {
-    isNormalUser = true;
-    extraGroups = ["wheel"];
+  users.users = {
+    tekkom = {
+      isNormalUser = true;
+      extraGroups = ["wheel"];
+    };
+    builder = {
+      openssh.authorizedKeys.keys = [
+        (builtins.readFile
+        ./id_ed25519.pub)
+      ];
+      isNormalUser = true;
+      extraGroups = ["wheel"];
+    };
   };
+  nix.settings.trusted-users = [
+    "builder"
+  ];
   system.stateVersion = "25.11";
 }

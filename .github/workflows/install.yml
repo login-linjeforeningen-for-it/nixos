@@ -21,4 +21,4 @@ jobs:
           chmod 600 id_ed25519
       - name: Install to VM
         run: |
-          NIX_SSHOPTS="-i id_ed25519" nixos-rebuild switch --sudo --target-host builder@${{ github.event.inputs.host }} --flake .#${{ github.event.inputs.configuration }}
+          sudo nix run github:nix-community/nixos-anywhere -- --flake .#${{ github.event.inputs.configuration }} -i id_ed25519 --target-host builder@${{ github.event.inputs.host }}
