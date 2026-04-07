@@ -10,6 +10,7 @@
       extraPackages = with pkgs; [
         nixos-rebuild
         openssh
+        sudo
       ];
     };
   };
