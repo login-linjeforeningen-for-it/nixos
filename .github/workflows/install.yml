@@ -24,4 +24,4 @@ jobs:
           chmod 600 id_ed25519
       - name: Install to VM
         run: |
-          nix run github:nix-community/nixos-anywhere -- --flake .#${{ github.event.inputs.configuration }} -o UserKnownHostsFile=known_hosts -i id_ed25519 builder@${{ github.event.inputs.host }}
+          nix run github:nix-community/nixos-anywhere -- --flake .#${{ github.event.inputs.configuration }} --ssh-option UserKnownHostsFile=known_hosts -i id_ed25519 builder@${{ github.event.inputs.host }}
