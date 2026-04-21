@@ -15,7 +15,7 @@ jobs:
     runs-on: "nixos"
     steps:
       - uses: actions/checkout@v6
-      - name: Add agamemnon to known hosts
+      - name: Add target host to known_hosts
         run: |
           ssh-keyscan ${{ github.event.inputs.host }} >> known_hosts
       - name: Set up SSH key
