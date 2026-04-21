@@ -15,10 +15,13 @@ jobs:
     runs-on: "nixos"
     steps:
       - uses: actions/checkout@v6
+      - name: Add target host to known_hosts
+        run: |
+          ssh-keyscan ${{ github.event.inputs.host }} >> known_hosts
       - name: Set up SSH key
         run: |
-          echo "${{ secrets.SSH_PRIVATE_KEY }}" > id_ed25519
+          printf '%s' "${{ secrets.DEPLOY_SSH_KEY }}" > id_ed25519
           chmod 600 id_ed25519
       - name: Install to VM
         run: |
-          sudo nix run github:nix-community/nixos-anywhere -- --flake .#${{ github.event.inputs.configuration }} -i id_ed25519 --target-host builder@${{ github.event.inputs.host }}
+          nix run github:nix-community/nixos-anywhere -- --flake .#${{ github.event.inputs.configuration }} --ssh-option UserKnownHostsFile=known_hosts -i id_ed25519 builder@${{ github.event.inputs.host }}

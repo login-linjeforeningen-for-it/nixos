@@ -1,4 +1,4 @@
-{...}:{
+{pkgs, ...}:{
   # GitHub runner configuration for this host
   services.github-runners = {
     proxmox1 = {
@@ -7,6 +7,11 @@
       enable = true;
       extraLabels = [ "nixos" ];
       tokenFile = "/var/lib/github-runner/token";
+      extraPackages = with pkgs; [
+        nixos-rebuild
+        openssh
+        sudo
+      ];
     };
   };
 }

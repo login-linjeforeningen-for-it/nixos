@@ -1,4 +1,4 @@
-name: Install NixOS configuration
+name: Update NixOS configuration
 
 on:
   workflow_dispatch:
@@ -15,10 +15,13 @@ jobs:
     runs-on: "nixos"
     steps:
       - uses: actions/checkout@v6
+      - name: Add target host to known_hosts
+        run: |
+          ssh-keyscan ${{ github.event.inputs.host }} >> known_hosts
       - name: Set up SSH key
         run: |
-          echo "${{ secrets.SSH_PRIVATE_KEY }}" > id_ed25519
+          printf '%s' "${{ secrets.DEPLOY_SSH_KEY }}" > id_ed25519
           chmod 600 id_ed25519
       - name: Install to VM
         run: |
-          NIX_SSHOPTS="-i id_ed25519" nixos-rebuild switch --sudo --target-host builder@${{ github.event.inputs.host }} --flake .#${{ github.event.inputs.configuration }}
+          NIX_SSHOPTS="-i id_ed25519 -o UserKnownHostsFile=known_hosts" nixos-rebuild switch --sudo --target-host builder@${{ github.event.inputs.host }} --flake .#${{ github.event.inputs.configuration }}
