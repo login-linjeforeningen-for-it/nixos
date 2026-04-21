@@ -20,7 +20,7 @@ jobs:
           ssh-keyscan ${{ github.event.inputs.host }} >> known_hosts
       - name: Set up SSH key
         run: |
-          echo "${{ secrets.DEPLOY_SSH_KEY }}" > id_ed25519
+          printf '%s' "${{ secrets.DEPLOY_SSH_KEY }}" > id_ed25519
           chmod 600 id_ed25519
       - name: Install to VM
         run: |
