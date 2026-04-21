@@ -25,3 +25,6 @@ jobs:
       - name: Install to VM
         run: |
           NIX_SSHOPTS="-i id_ed25519 -o UserKnownHostsFile=known_hosts" nixos-rebuild switch --sudo --target-host builder@${{ github.event.inputs.host }} --flake .#${{ github.event.inputs.configuration }}
+      - name: Clean up known hosts
+        run: |
+          ssh-keygen -R ${{ github.event.inputs.host }} -f ~/.ssh/known_hosts
