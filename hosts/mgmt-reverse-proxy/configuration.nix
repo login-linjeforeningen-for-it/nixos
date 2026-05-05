@@ -165,7 +165,7 @@
                 "wings" = {
           loadBalancer = {
             servers = [
-              { url = "http://10.30.0.20"; }
+              { url = "http://10.30.0.20:8080"; }
             ];
           };
         };
