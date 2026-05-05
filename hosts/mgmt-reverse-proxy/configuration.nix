@@ -83,6 +83,12 @@
           rule = "Host(`pelican.${domain}`)";
         };
 
+          "wings" = {
+          service = "wings";
+          entryPoints = [ "https" ];
+          rule = "Host(`wings.${domain}`)";
+        };
+
       };
       http.middlewares = {
         websocket-headers = {
@@ -153,6 +159,13 @@
           loadBalancer = {
             servers = [
               { url = "http://10.20.0.20"; }
+            ];
+          };
+        };
+                "wings" = {
+          loadBalancer = {
+            servers = [
+              { url = "http://10.30.0.20"; }
             ];
           };
         };
