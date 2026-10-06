@@ -44,10 +44,12 @@ in {
     allowedTCPPorts = [80 443];
   };
 
+  systemd.services.traefik.environment.OVH_ENDPOINT = "ovh-ca";
+
   services.traefik = {
     enable = true;
     environmentFiles = [
-      "/etc/traefik/digitalocean.env"
+      "/etc/traefik/ovh.env"
     ];
 
     staticConfigOptions = {
@@ -82,7 +84,7 @@ in {
       certificatesResolvers.letsencrypt.acme = {
         email = "postmaster@login.no";
         storage = "${config.services.traefik.dataDir}/acme.json";
-        dnsChallenge.provider = "digitalocean";
+        dnsChallenge.provider = "ovh";
       };
     };
 
