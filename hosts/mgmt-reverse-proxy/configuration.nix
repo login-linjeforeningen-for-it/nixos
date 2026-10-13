@@ -9,7 +9,8 @@
     idrac1.urls = ["https://10.10.0.17"];
     idrac2.urls = ["https://10.10.0.18"];
     idrac3.urls = ["https://10.10.0.19"];
-    pelican.urls = ["http://10.20.0.20"];
+    pelican.urls = ["http://10.30.0.101"];
+    wings.urls = ["https://10.30.0.100];
     pfsense.urls = ["https://10.20.0.10:10443"];
     truenas.urls = ["https://10.10.0.30"];
     usb.urls = ["https://10.20.0.91"];
