@@ -92,11 +92,25 @@ in {
     dynamicConfigOptions = {
       http.serversTransports.insecureTransport.insecureSkipVerify = true;
 
+      http.middlewares.authentik.forwardAuth = {
+        address = "https://authentik.login.no/outpost.goauthentik.io/auth/traefik";
+        trustForwardHeader = true;
+        maxResponseBodySize = 4194304;
+        authResponseHeaders = [
+          "X-authentik-username"
+          "X-authentik-groups"
+          "X-authentik-email"
+          "X-authentik-name"
+          "X-authentik-uid"
+        ];
+      };
+
       http.routers =
         lib.mapAttrs (name: _: {
           service = name;
           entryPoints = ["local"];
           rule = "Host(`${name}.${domain}`)";
+          middlewares = ["authentik"];
         })
         mgmt
         // {
