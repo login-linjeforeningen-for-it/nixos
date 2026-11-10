@@ -28,6 +28,8 @@
     etcd-snapshot-retention: 20
     etcd-snapshot-compress: true
 
+    secrets-encryption: true
+
     tls-san:
       - apiary.login.no
       - 10.30.0.30
