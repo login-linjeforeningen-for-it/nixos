@@ -14,6 +14,7 @@
     pfsense.urls = ["https://10.20.0.10:10443"];
     truenas.urls = ["https://10.10.0.30"];
     usb.urls = ["https://10.20.0.91"];
+    wazuh.urls = ["https://54.37.233.253"];
 
     pve = {
       urls = [
