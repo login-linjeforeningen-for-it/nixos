@@ -4,9 +4,15 @@
     ./hardware-configuration.nix
   ];
   nix.settings.experimental-features = ["nix-command" "flakes"];
+  nix.settings.extra-substituters = ["https://wazuh.cachix.org"];
+  nix.settings.extra-trusted-public-keys = ["wazuh.cachix.org-1:NflEnqc62gXNPSzRtdOmuzDyfGK7yrTc6C2znraX3B8="];
   networking.hostName = host;
   services.openssh.enable = true;
   services.qemuGuest.enable = true;
+  services.wazuh-agent = {
+    enable = true;
+    manager.host = "54.37.233.253"; # secbee
+  };
   services.opkssh = rec {
     enable = true;
     providers = {
